@@ -117,7 +117,7 @@ export default function LotteryEntrance() {
                     </h4>
                 </div>
             ) : (
-                <div>No Raffle Address Detected.</div>
+                <div>No Raffle Address Detected. Please enter raffle !</div>
             )}
         </div>
     )
