@@ -18,7 +18,12 @@ export default function LotteryEntrance() {
 
     const dispatch = useNotification()
 
-    const { runContractFunction: enterRaffle } = useWeb3Contract({
+    const {
+        runContractFunction: enterRaffle,
+        data: enterTxResponse,
+        isLoading,
+        isFetching,
+    } = useWeb3Contract({
         abi: abi,
         contractAddress: raffleAddress,
         functionName: "enterRaffle",
@@ -87,37 +92,34 @@ export default function LotteryEntrance() {
     }
 
     return (
-        <div>
-            <h3> Hi from LotteryEntrance!</h3>
+        <div className="p-5">
+            <h1 className="py-4 px-4 font-bold text-3xl">Lottery</h1>
             {raffleAddress ? (
-                <div>
+                <>
                     <button
-                        onClick={async function () {
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-auto"
+                        onClick={async () =>
                             await enterRaffle({
+                                // onComplete:
+                                // onError:
                                 onSuccess: handleSuccess,
                                 onError: (error) => console.log(error),
                             })
-                        }}
+                        }
+                        disabled={isLoading || isFetching}
                     >
-                        Enter Raffle
+                        {isLoading || isFetching ? (
+                            <div className="animate-spin spinner-border h-8 w-8 border-b-2 rounded-full"></div>
+                        ) : (
+                            "Enter Raffle"
+                        )}
                     </button>
-                    <h4>
-                        {" "}
-                        Entrance Fee in Ether : {ethers.utils.formatUnits(
-                            entranceFee,
-                            "ether"
-                        )}{" "}
-                        ETH{" "}
-                    </h4>
-                    <h4>Number of Players : {numPlayers}</h4>
-
-                    <h4>
-                        Recent Winner : {recentWinner.slice(0, 6)}...
-                        {recentWinner.slice(length - 4)}
-                    </h4>
-                </div>
+                    <div>Entrance Fee: {ethers.utils.formatUnits(entranceFee, "ether")} ETH</div>
+                    <div>The current number of players is: {numPlayers}</div>
+                    <div>The most previous winner was: {recentWinner}</div>
+                </>
             ) : (
-                <div>No Raffle Address Detected. Please enter raffle !</div>
+                <div>Please connect to a supported chain </div>
             )}
         </div>
     )

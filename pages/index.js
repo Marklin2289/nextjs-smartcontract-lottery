@@ -9,11 +9,11 @@ export default function Home() {
     return (
         <div className={styles.container}>
             <Head>
-                <title>Smart contract raffle</title>
+                <title>Smart Contract Raffle</title>
                 <meta name="description" content="Our Smart Contract Lottery" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <h1>Hello ! Testing connection. </h1>
+            {/* <h1>Hello ! Testing connection. </h1> */}
             {/* header /connect button / nav bar */}
 
             {/* <ManualHeader /> */}
